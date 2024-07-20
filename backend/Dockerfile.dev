@@ -1,0 +1,9 @@
+FROM node:22-alpine AS base
+
+WORKDIR /backend
+
+RUN npm install -g typescript nodemon
+
+COPY ../backend/ /backend
+
+CMD yarn install && npm run start:dev
