@@ -1,25 +1,22 @@
 import { Request, Response } from 'express';
 
-import { Task } from '@/api/entity/task';
-import { AppDataSource } from '@/common/config/data-source';
+import { TaskService } from '@/api/services/taskService';
 
-export const store = async (req: Request, res: Response) => {
-  const taskRepository = AppDataSource.getRepository(Task);
-  try {
-    const task = taskRepository.create(req.body);
-    await taskRepository.save(task);
-    res.status(201).send(task);
-  } catch (error) {
-    res.status(500).send('Error creating a new task');
-  }
-};
+export class TaskController {
+  private service: TaskService;
 
-export const index = async (req: Request, res: Response) => {
-  const taskRepository = AppDataSource.getRepository(Task);
-  try {
-    const tasks = await taskRepository.find();
-    res.status(200).send(tasks);
-  } catch (error) {
-    res.status(500).send('Error retrieving tasks');
+  constructor(taskService: TaskService) {
+    this.service = taskService;
   }
-};
+
+  public async getAllTasks(req: Request, res: Response): Promise<void> {
+    const tasks = await this.service.getAllTasks();
+    res.json(tasks);
+  }
+
+  public async addTask(req: Request, res: Response): Promise<void> {
+    const taskData = req.body;
+    await this.service.addTask(taskData);
+    res.status(201).send({ message: 'add task success' });
+  }
+}
