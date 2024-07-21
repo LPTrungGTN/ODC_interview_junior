@@ -1,5 +1,6 @@
-import { index, store } from '@api/controllers/taskController';
 import { Router } from 'express';
+
+import { index, store } from '@/api/controllers/taskController';
 
 const router = Router();
 router.get('/', index);
