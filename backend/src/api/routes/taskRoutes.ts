@@ -2,10 +2,9 @@ import { index, store } from '@api/controllers/taskController';
 import { Router } from 'express';
 
 const router = Router();
-
-router.post('/', store);
-// router.get('/:id', show);
 router.get('/', index);
+// router.get('/:id', show);
+router.post('/', store);
 // router.patch('/', update);
-// router.delete('/:id', remove);
+// router.delete('/:id', destroy);
 export default router;
