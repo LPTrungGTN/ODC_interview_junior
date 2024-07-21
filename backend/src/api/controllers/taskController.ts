@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { Task } from '@/api/entity/task';
-import { AppDataSource } from '@/config/data-source';
+import { AppDataSource } from '@/common/config/data-source';
 
 export const store = async (req: Request, res: Response) => {
   const taskRepository = AppDataSource.getRepository(Task);
