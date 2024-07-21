@@ -34,7 +34,7 @@ export class TaskController {
   public async store(req: Request, res: Response): Promise<void> {
     try {
       await this.service.addTask(req);
-      res.status(201);
+      res.status(201).end();
     } catch (error) {
       res
         .status(error.statusCode || 500)
@@ -45,7 +45,7 @@ export class TaskController {
   public async update(req: Request, res: Response): Promise<void> {
     try {
       await this.service.updateTask(req);
-      res.status(200);
+      res.status(200).end();
     } catch (error) {
       res
         .status(error.statusCode || 500)
@@ -56,7 +56,7 @@ export class TaskController {
   public async destroy(req: Request, res: Response): Promise<void> {
     try {
       await this.service.deleteTaskById(req);
-      res.status(204);
+      res.status(204).end();
     } catch (error) {
       res
         .status(error.statusCode || 500)
