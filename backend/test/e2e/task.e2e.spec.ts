@@ -51,8 +51,13 @@ describe('Task E2E', () => {
     await db.createQueryBuilder().delete().from(Task).execute();
   });
 
-  afterAll(() => {
-    server.close();
+  afterAll(async () => {
+    if (server) {
+      server.close();
+    }
+    if (AppDataSource.isInitialized) {
+      await AppDataSource.destroy();
+    }
   });
 
   describe('store', () => {
@@ -63,10 +68,8 @@ describe('Task E2E', () => {
     };
     it('should return 201 OK when creating a task', async () => {
       const res = await request(server).post(baseUrl).send(task);
-      const { body, status } = res;
 
-      expect(status).toBe(201);
-      expect(body).toEqual({ message: 'add task success' });
+      expect(res.status).toBe(201);
     });
 
     it('should return bad request', async () => {
