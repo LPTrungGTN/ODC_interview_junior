@@ -13,6 +13,7 @@
     "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
+    "types": ["jest", "node"],
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
@@ -21,5 +22,12 @@
     "paths": {
       "@/*": ["./*"]
     }
-  }
+  },
+  "files": [
+    "./node_modules/@types/node/index.d.ts",
+    "./node_modules/@types/jest/index.d.ts",
+    "./node_modules/@types/express/index.d.ts"
+  ],
+  "include": ["src/**/*.ts", "test/**/*.ts"],
+  "exclude": ["node_modules"]
 }

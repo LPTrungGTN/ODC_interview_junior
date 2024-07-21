@@ -22,7 +22,7 @@ module.exports = {
   },
   ignorePatterns: [
     '.eslintrc.js',
-    'jest-e2e.json',
+    'jest.config.ts',
     'package.json',
     'nest-cli.json',
     'package-lock.json',
