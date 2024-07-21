@@ -20,10 +20,43 @@ export class TaskController {
     }
   }
 
+  public async show(req: Request, res: Response): Promise<void> {
+    try {
+      const tasks = await this.service.getTaskById(req);
+      res.json(tasks);
+    } catch (error) {
+      res
+        .status(error.statusCode || 500)
+        .send({ message: error.message || 'Internal Server Error' });
+    }
+  }
+
   public async store(req: Request, res: Response): Promise<void> {
     try {
       await this.service.addTask(req);
-      res.status(201).send({ message: 'add task success' });
+      res.status(201);
+    } catch (error) {
+      res
+        .status(error.statusCode || 500)
+        .send({ message: error.message || 'Internal Server Error' });
+    }
+  }
+
+  public async update(req: Request, res: Response): Promise<void> {
+    try {
+      await this.service.updateTask(req);
+      res.status(200);
+    } catch (error) {
+      res
+        .status(error.statusCode || 500)
+        .send({ message: error.message || 'Internal Server Error' });
+    }
+  }
+
+  public async destroy(req: Request, res: Response): Promise<void> {
+    try {
+      await this.service.deleteTaskById(req);
+      res.status(204);
     } catch (error) {
       res
         .status(error.statusCode || 500)
