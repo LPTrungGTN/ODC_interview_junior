@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import { IsDate, IsNotEmpty, ValidateIf } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -11,14 +12,14 @@ export class Task {
 
   @Column({ nullable: true, type: 'date' })
   @IsDate()
+  @ValidateIf((o) => o.endDate != null)
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   @IsNotEmpty()
   startDate: string;
 
   @Column({ nullable: true, type: 'date' })
   @IsDate()
   @ValidateIf((o) => o.endDate != null)
-  @IsNotEmpty({
-    message: 'Start date must be present if there is an end date.',
-  })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   endDate: string;
 }
