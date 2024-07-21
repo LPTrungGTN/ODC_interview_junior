@@ -12,11 +12,14 @@ const taskController = new TaskController(taskService);
 
 const index = taskController.index.bind(taskController);
 const store = taskController.store.bind(taskController);
+const show = taskController.show.bind(taskController);
+const update = taskController.update.bind(taskController);
+const destroy = taskController.destroy.bind(taskController);
 
 router.get('/', index);
-// router.get('/:id', taskController.showTask.bind(taskController));
+router.get('/:id', show);
 router.post('/', store);
-// router.patch('/:id', taskController.updateTask.bind(taskController));
-// router.delete('/:id', taskController.deleteTask.bind(taskController));
+router.patch('/:id', update);
+router.delete('/:id', destroy);
 
 export default router;
