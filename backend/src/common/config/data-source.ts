@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 
-import { Task } from '@/entity/task';
+import { Task } from '@/api/entity/task';
 
 export const AppDataSource = new DataSource({
   database: './main.sqlite',

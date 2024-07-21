@@ -1,25 +1,33 @@
 import { Request, Response } from 'express';
 
-import { AppDataSource } from '@/config/data-source';
-import { Task } from '@/entity/task';
+import { TaskService } from '@/api/services/taskService';
 
-export const store = async (req: Request, res: Response) => {
-  const taskRepository = AppDataSource.getRepository(Task);
-  try {
-    const task = taskRepository.create(req.body);
-    await taskRepository.save(task);
-    res.status(201).send(task);
-  } catch (error) {
-    res.status(500).send('Error creating a new task');
-  }
-};
+export class TaskController {
+  private service: TaskService;
 
-export const index = async (req: Request, res: Response) => {
-  const taskRepository = AppDataSource.getRepository(Task);
-  try {
-    const tasks = await taskRepository.find();
-    res.status(200).send(tasks);
-  } catch (error) {
-    res.status(500).send('Error retrieving tasks');
+  constructor(taskService: TaskService) {
+    this.service = taskService;
   }
-};
+
+  public async index(req: Request, res: Response): Promise<void> {
+    try {
+      const tasks = await this.service.getAllTasks();
+      res.json(tasks);
+    } catch (error) {
+      res
+        .status(error.statusCode || 500)
+        .send({ message: error.message || 'Internal Server Error' });
+    }
+  }
+
+  public async store(req: Request, res: Response): Promise<void> {
+    try {
+      await this.service.addTask(req);
+      res.status(201).send({ message: 'add task success' });
+    } catch (error) {
+      res
+        .status(error.statusCode || 500)
+        .send({ message: error.message || 'Internal Server Error' });
+    }
+  }
+}

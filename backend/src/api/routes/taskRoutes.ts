@@ -1,11 +1,22 @@
-import { index, store } from '@api/controllers/taskController';
 import { Router } from 'express';
+
+import { TaskController } from '@/api/controllers/taskController';
+import { TaskRepository } from '@/api/repositories/taskRepository';
+import { TaskService } from '@/api/services/taskService';
 
 const router = Router();
 
-router.post('/', store);
-// router.get('/:id', show);
+const taskRepository = new TaskRepository();
+const taskService = new TaskService(taskRepository);
+const taskController = new TaskController(taskService);
+
+const index = taskController.index.bind(taskController);
+const store = taskController.store.bind(taskController);
+
 router.get('/', index);
-// router.patch('/', update);
-// router.delete('/:id', remove);
+// router.get('/:id', taskController.showTask.bind(taskController));
+router.post('/', store);
+// router.patch('/:id', taskController.updateTask.bind(taskController));
+// router.delete('/:id', taskController.deleteTask.bind(taskController));
+
 export default router;
