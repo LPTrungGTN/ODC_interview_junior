@@ -27,6 +27,7 @@ module.exports = {
     'nest-cli.json',
     'package-lock.json',
     'ormconfig.json',
+    'nodemon.json',
   ],
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',
