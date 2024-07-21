@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx tsc && node dist/server.js",
     "start:dev": "nodemon",
-    "test:e2e": "jest"
+    "test:e2e": "jest --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
