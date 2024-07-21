@@ -1,11 +1,11 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "app.ts",
+  "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx tsc && node dist/app.js",
-    "start:dev": "npx ts-node -r tsconfig-paths/register src/app.ts",
+    "start": "npx tsc && node dist/server.js",
+    "start:dev": "npx ts-node -r tsconfig-paths/register src/server.ts",
     "test:e2e": "jest"
   },
   "keywords": [],
