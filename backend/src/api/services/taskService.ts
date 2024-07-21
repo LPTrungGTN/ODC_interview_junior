@@ -61,7 +61,12 @@ export class TaskService {
     const {
       params: { id },
     } = req;
-    if (!id || typeof id !== 'number') throw new BadRequestException();
-    return id;
+
+    const idNumber = Number(id);
+    if (!id || isNaN(idNumber)) {
+      throw new BadRequestException();
+    }
+
+    return idNumber;
   }
 }
