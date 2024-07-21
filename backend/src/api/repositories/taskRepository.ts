@@ -8,8 +8,7 @@ export class TaskRepository {
     return await this.db.find();
   }
 
-  public async add(taskData: any): Promise<void> {
-    const task = this.db.create(taskData);
-    await this.db.save(task);
+  public async add(taskData: Task): Promise<void> {
+    await this.db.save(taskData);
   }
 }

@@ -1,3 +1,8 @@
+import { plainToClass } from 'class-transformer';
+import { validate } from 'class-validator';
+import { Request } from 'express';
+import createHttpError from 'http-errors';
+
 import { Task } from '@/api/entity/task';
 import { TaskRepository } from '@/api/repositories/taskRepository';
 
@@ -12,7 +17,12 @@ export class TaskService {
     return await this.repository.findAll();
   }
 
-  public async addTask(data: any): Promise<void> {
-    await this.repository.add(data);
+  public async addTask(req: Request): Promise<void> {
+    const task = plainToClass(Task, req.body);
+
+    const errors = await validate(task);
+    if (errors.length > 0) throw createHttpError(400, 'Bad Request');
+
+    await this.repository.add(task);
   }
 }
