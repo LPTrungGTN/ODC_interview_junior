@@ -2,6 +2,8 @@ name: Deploy Express App to AWS EC2
 
 on:
   pull_request:
+    branches:
+      - "**"
 
 jobs:
   build-and-deploy:
@@ -15,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "14"
+          node-version: "22"
 
       - name: Install dependencies
         run: yarn install
@@ -28,19 +30,19 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.DEPLOY_KEY }}
+          key: ${{ secrets.SSH_KEY }}
           port: 22
           source: "backend/*"
-          target: "/path/to/your/server/directory"
+          target: "/home/ubuntu/backend"
 
       - name: Restart server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.DEPLOY_KEY }}
+          key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
-            cd /path/to/your/server/directory
+            cd /home/ubuntu/backend
             yarn install --production
-            pm2 restart all
+            yarn start
